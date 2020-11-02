@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from '../frontend/reducers';
 import Layout from '../frontend/components/Layout';
-import initialState from '../frontend/initialState';
 import serverRoutes from '../frontend/routes/serverRoutes';
 import getManifest from './getManifest';
 
@@ -18,6 +17,7 @@ import cookieParser from 'cookie-parser';
 import boom from '@hapi/boom';
 import passport from 'passport';
 import axios from 'axios';
+import initialState from '../frontend/initialState';
 
 dotenv.config();
 
@@ -78,14 +78,40 @@ const setResponse = (html, preloadedState, manifest) => {
   );
 };
 
+
 const renderApp = (req, res) => {
+  let initialState;
+  const { email, name, id } = req.cookies;
+
+  if (id) {
+    initialState = {
+      user: {
+        email,
+        name,
+        id
+      },
+      myList: [],
+      trends: [],
+      originals: [],
+      search: []
+    }
+  } else {
+    initialState = {
+      user: {},
+      myList: [],
+      trends: [],
+      originals: [],
+      search: []
+    }
+  }
   const store = createStore(reducer, initialState);
   const preloadedState = store.getState();
+  const isLogged = (initialState.user.id);
   const html = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={{}}>
         <Layout>
-          {renderRoutes(serverRoutes)}
+          {renderRoutes(serverRoutes(isLogged))}
         </Layout>
       </StaticRouter>
     </Provider>
