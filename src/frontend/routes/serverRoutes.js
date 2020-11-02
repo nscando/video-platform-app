@@ -31,8 +31,6 @@ const serverRoutes = (isLogged) => {
       component: isLogged ? Player : Login,
     },
   ];
-}
-
-
+};
 
 export default serverRoutes;
