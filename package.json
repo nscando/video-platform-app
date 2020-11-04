@@ -67,18 +67,19 @@
     "mini-css-extract-plugin": "^0.7.0",
     "node-sass": "^4.13.1",
     "nodemon": "^2.0.6",
+    "react-test-renderer": "^17.0.1",
     "sass-loader": "^7.3.1",
     "terser-webpack-plugin": "^4.2.3",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1"
   },
-  "jest":{
-    "setupFilesAfterEnv":[
+  "jest": {
+    "setupFilesAfterEnv": [
       "<rootDir>/src/frontend/__test__/setupTest.js"
     ],
-    "moduleNameMapper":{
-      "\\.(jpg|jpeg|png|gif)$":"<rootDir>/src/frontend/__mocks__/fileMock.js",
-      "\\.(scss|css|sass)$":"<rootDir>/scr/frontend/__mocks__/styleMock.js"
+    "moduleNameMapper": {
+      "\\.(jp|jpeg|png|gif)$": "<rootDir>/src/frontend/__mocks__/fileMock.js",
+      "\\.(scss|css|sass)$": "<rootDir>/src/frontend/__mocks__/styleMock.js"
     }
   }
 }
