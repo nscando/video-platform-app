@@ -20,12 +20,12 @@ describe('<Register/>', () => {
           register.unmount();
      });
 
-     // test('Register Snapshot', () => {
-     //      const register = create(
-     //           <ProviderMock>
-     //                <Register />
-     //           </ProviderMock>);
-     //      expect(register.toJSON()).toMatchSnapshot();
-     // })
+     test('Register Snapshot', () => {
+          const register = create(
+               <ProviderMock>
+                    <Register />
+               </ProviderMock>);
+          expect(register.toJSON()).toMatchSnapshot();
+     })
 
 });
