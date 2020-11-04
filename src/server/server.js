@@ -17,7 +17,7 @@ import cookieParser from 'cookie-parser';
 import boom from '@hapi/boom';
 import passport from 'passport';
 import axios from 'axios';
-import initialState from '../frontend/initialState';
+
 
 dotenv.config();
 
@@ -90,6 +90,7 @@ const renderApp = async (req, res) => {
       method: 'get',
     });
     movieList = movieList.data.data;
+
     initialState = {
       user: {
         id, email, name,
@@ -173,6 +174,53 @@ app.post("/auth/sign-up", async function (req, res, next) {
     next(error);
   }
 });
+
+// app.post('/user-movies', async function (req, res, next) {
+//   try {
+//     const { body: userMovie } = req;
+//     const { id, token } = req.cookies;
+
+//     const { data, status } = await axios({
+//       url: `${process.env.API_URL}/api/user-movies`,
+//       headers: { Authorization: `Bearer ${token}` },
+//       method: "post",
+//       data: {
+//         userMovie: id,
+//         movieId: userMovie.movieId
+//       }
+//     });
+
+//     if (status !== 201) {
+//       return next(boom.badImplementation());
+//     }
+
+//     res.status(201).json(data);
+//   } catch (error) {
+//     next(error);
+//   }
+
+// });
+
+// app.delete("/user-movies/:userMovieId", async function (req, res, next) {
+//   try {
+//     const { userMovieId } = req.params;
+//     const { token } = req.cookies;
+
+//     const { data, status } = await axios({
+//       url: `${process.env.API_URL}/api/user-movies/${userMovieId}`,
+//       headers: { Authorization: `Bearer ${token}` },
+//       method: "delete"
+//     });
+
+//     if (status !== 200) {
+//       return next(boom.badImplementation());
+//     }
+
+//     res.status(200).json(data);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 
 app.get('*', renderApp);

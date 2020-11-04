@@ -74,4 +74,27 @@ export const loginUser = ({ email, password }, redirectUrl) => {
       .catch(err => dispatch(setError(err)));
   };
 };
+
+// export const userMovies = ( userId, movie, cb ) => (dispatch) =>  {
+// const data = {
+//   userId,
+//   movieId: movie.id,
+// };
+//     axios({
+//       url: '/user-movies',
+//       method: 'post',
+//       data,
+//     })
+//       .then((data) => {
+//         const {
+//           data:{movieExist},
+//         }= data;
+//         dispatch(setFavorite({ id, userMovieId, cover, title, year, contentRating, duration }));
+//       })
+//       .catch((err) => {
+//         dispatch(setError(err));
+//       });
+//   };
+// };
+
 export { setFavorite as default };
