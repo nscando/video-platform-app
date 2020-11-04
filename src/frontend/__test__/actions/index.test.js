@@ -17,7 +17,7 @@ describe('Actions', () => {
                password: 'password'
           }
           const expectedAction = {
-               type: "LOGIN_REQUEST",
+               type: 'LOGIN_REQUEST',
                payload
           }
           expect(loginRequest(payload)).toEqual(expectedAction);
