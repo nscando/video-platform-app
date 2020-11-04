@@ -12,11 +12,11 @@ const store = createStore(reducer, initialState, compose(applyMiddleware(thunk))
 const history = createBrowserHistory();
 
 const ProviderMock = props => (
-     <Provider store={store}>
-          <Router history={history}>
-               {props.children}
-          </Router>
-     </Provider>
+  <Provider store={store}>
+    <Router history={history}>
+      {props.children}
+    </Router>
+  </Provider>
 );
 
 module.exports = ProviderMock;
