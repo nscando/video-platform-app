@@ -8,15 +8,14 @@ import { StaticRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import reducer from '../frontend/reducers';
-import Layout from '../frontend/components/Layout';
-import serverRoutes from '../frontend/routes/serverRoutes';
-import getManifest from './getManifest';
-
 import cookieParser from 'cookie-parser';
 import boom from '@hapi/boom';
 import passport from 'passport';
 import axios from 'axios';
+import reducer from '../frontend/reducers';
+import Layout from '../frontend/components/Layout';
+import serverRoutes from '../frontend/routes/serverRoutes';
+import getManifest from './getManifest';
 
 
 dotenv.config();
@@ -33,7 +32,6 @@ require('./utils/auth/strategies/basic');
 
 if (ENV === 'development') {
   const webPackConfig = require('../../webpack.config');
-  console.log('Development config');
   const webpackDevMiddleware = require('webpack-dev-middleware');
   const webpackHotMiddleware = require('webpack-hot-middleware');
   const compiler = webpack(webPackConfig);
@@ -53,7 +51,7 @@ if (ENV === 'development') {
 const setResponse = (html, preloadedState, manifest) => {
   const mainStyles = manifest ? manifest['main.css'] : '/assets/app.css';
   const mainBuild = manifest ? manifest['main.js'] : '/assets/app.js';
-  const vendorBuild = manifest ? manifest['vendors.js'] : '/assets/vendor.js';
+  const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
   return (
     `
       <!DOCTYPE html>
@@ -78,7 +76,6 @@ const setResponse = (html, preloadedState, manifest) => {
   );
 };
 
-
 const renderApp = async (req, res) => {
   let initialState;
   const { token, email, name, id } = req.cookies;
@@ -90,13 +87,11 @@ const renderApp = async (req, res) => {
       method: 'get',
     });
     movieList = movieList.data.data;
-
     initialState = {
       user: {
         id, email, name,
       },
       myList: [],
-      search: [],
       trends: movieList.filter(movie => movie.contentRating === 'PG' && movie._id),
       originals: movieList.filter(movie => movie.contentRating === 'G' && movie._id)
     };
@@ -105,8 +100,7 @@ const renderApp = async (req, res) => {
       user: {},
       myList: [],
       trends: [],
-      originals: [],
-      search: []
+      originals: []
     }
   }
 
@@ -174,53 +168,6 @@ app.post("/auth/sign-up", async function (req, res, next) {
     next(error);
   }
 });
-
-// app.post('/user-movies', async function (req, res, next) {
-//   try {
-//     const { body: userMovie } = req;
-//     const { id, token } = req.cookies;
-
-//     const { data, status } = await axios({
-//       url: `${process.env.API_URL}/api/user-movies`,
-//       headers: { Authorization: `Bearer ${token}` },
-//       method: "post",
-//       data: {
-//         userMovie: id,
-//         movieId: userMovie.movieId
-//       }
-//     });
-
-//     if (status !== 201) {
-//       return next(boom.badImplementation());
-//     }
-
-//     res.status(201).json(data);
-//   } catch (error) {
-//     next(error);
-//   }
-
-// });
-
-// app.delete("/user-movies/:userMovieId", async function (req, res, next) {
-//   try {
-//     const { userMovieId } = req.params;
-//     const { token } = req.cookies;
-
-//     const { data, status } = await axios({
-//       url: `${process.env.API_URL}/api/user-movies/${userMovieId}`,
-//       headers: { Authorization: `Bearer ${token}` },
-//       method: "delete"
-//     });
-
-//     if (status !== 200) {
-//       return next(boom.badImplementation());
-//     }
-
-//     res.status(200).json(data);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 
 
 app.get('*', renderApp);
