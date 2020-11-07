@@ -8,6 +8,7 @@
     "test:watch": "jest --watch",
     "build": "webpack-cli --config webpack.config.js",
     "start:dev": "nodemon src/server/index",
+    "start": "node src/server/index.js",
     "lint": "eslint src/frontend/ --ext .js --ext .jsx --fix",
     "test:coverage":"jest --coverage"
   },
