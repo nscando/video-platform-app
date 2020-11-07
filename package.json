@@ -10,7 +10,7 @@
     "start:dev": "nodemon src/server/index",
     "start": "node src/server/index.js",
     "lint": "eslint src/frontend/ --ext .js --ext .jsx --fix",
-    "test:coverage":"jest --coverage"
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -86,6 +86,6 @@
     }
   },
   "engines": {
-    "node": "12.16.x"
+    "node": "12.19.0"
   }
 }
